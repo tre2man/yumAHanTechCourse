@@ -10,7 +10,7 @@ export class User extends Model {
   email: string;
 
   @Field((_) => String)
-  passWord: string;
+  password: string;
 
   @Field((_) => [Post])
   posts: Post[];

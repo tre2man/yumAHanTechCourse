@@ -1,6 +1,8 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Int, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Post } from 'src/model/post';
+import { User } from 'src/model/user';
+import { CurrentUser } from '../auth/current-user';
 import { GqlAuthGuard } from '../auth/gql-auth-guard';
 import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
@@ -13,10 +15,11 @@ export class PostResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation((_) => Post)
   createPost(
+    @CurrentUser() user: User,
     @Args('createPostInput', { type: () => CreatePostInput })
     createPostInput: CreatePostInput,
   ) {
-    return this.postService.createPost(createPostInput);
+    return this.postService.createPost(user, createPostInput);
   }
 
   @UseGuards(GqlAuthGuard)
@@ -30,9 +33,14 @@ export class PostResolver {
   }
 
   // 회원이 아니여도 볼수 있게 가드 제거
-  @Mutation((_) => [Post])
+  @Query((_) => [Post])
   getPostsByPage(@Args('pageNum', { type: () => Int }) pageNum: number) {
     return this.postService.getPostsByPage(pageNum);
+  }
+
+  @Query((_) => [Post])
+  getAllPage() {
+    return this.postService.getAllPage();
   }
 
   @UseGuards(GqlAuthGuard)

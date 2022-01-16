@@ -5,6 +5,6 @@ import { Post } from 'src/model/post';
 @InputType('CreatePostInput')
 export class CreatePostInput extends PickType(
   Post,
-  ['title', 'content', 'userId'],
+  ['title', 'content'],
   InputType,
 ) {}

@@ -16,7 +16,7 @@ model User {
   updatedAt       DateTime      @updatedAt
   deletedAt       DateTime?
   email           String        @unique
-  passWord        String
+  password        String
   posts           Post[]
 }
 

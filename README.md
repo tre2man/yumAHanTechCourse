@@ -1,73 +1,55 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# 염아한 테크코스 결과물
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 설명
+graphql을 이용한 서버입니다. 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Rest API와의 차이점은 사용자가 받을 데이터를 조정할 수 있고, 스키마를 쉽게 확인할 수 있습니다.
 
-## Description
+기존의 Rest API의 GET 명령은 Query, 나머지 동작은 모두 Mutation으로 통일됩니다.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### GraphQL 사용법
 
-## Installation
+1. localhost:5500/graphql 을 접속한다.
+2. 오른쪽 버튼을 누르면 스키마가 튀어나온다.
+3. 원하는 명령을 playground에 입력한다.
 
-```bash
-$ npm install
-```
+## 구현한 것
 
-## Running the app
+1. 회원가입
+2. 로그인 (JWT 토큰 사용)
+3. 로그아웃 (Header에 토큰을 담지 않으면 자동 로그아웃!)
+4. 로그인한 사용자만 게시글 작성 가능
+5. 비밀번호 암호화
+6. 모든 유저 게시글 열람 가능
+7. 게시글 조회 페이지네이션 (페이지 크기는 5)
+8. 게시글의 수정이나 삭제는 해당 게시글 생성한 회원만 가능
+9. DB는 sqlite 사용
 
-```bash
-# development
-$ npm run start
+## 엔드포인트 (GraphQL은 스키마) 설명
 
-# watch mode
-$ npm run start:dev
+mutation
 
-# production mode
-$ npm run start:prod
-```
+회원가입
+signUp(email, password)
+로그인
+signIn(email, password)
+글쓰기
+createPost(title, content)
+글수정
+updatePost(postId, updatePostInput: {title, content})
+글삭제
+deletePost (postId)
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
+query
 
-# e2e tests
-$ npm run test:e2e
+유저 찾기
+findUser(email)
+페이지로 포스트 불러오기
+getPostByPage(pageNum)
+모든 포스트 불러오기
+getAllPage
 
-# test coverage
-$ npm run test:cov
-```
+## 인증 로직 사용법
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+signUp 또는 signIn을 하게 되면 반환값으로 토큰이 나오게 된다. 이를 HTTP HEADER에 {"authorization" : "Bearer 토큰"} 형식으로 담아서 보내주면 된다.

@@ -4,6 +4,6 @@ import { Post } from 'src/model/post';
 @InputType('UpdatePostInput')
 export class UpdatePostInput extends PickType(
   Post,
-  ['content', 'title', 'userId'],
+  ['content', 'title'],
   InputType,
 ) {}
