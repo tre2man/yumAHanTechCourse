@@ -1,8 +1,9 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { Model } from './model';
 import { User } from './user';
 
-@ObjectType('model')
+@ObjectType('Post', { isAbstract: true })
+@InputType({ isAbstract: true })
 export class Post extends Model {
   @Field((_) => String)
   title: string;
@@ -13,6 +14,6 @@ export class Post extends Model {
   @Field((_) => Int)
   userId: number;
 
-  @Field((_) => [User])
-  user: User[];
+  @Field((_) => User)
+  user: User;
 }

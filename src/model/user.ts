@@ -1,8 +1,10 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { ArgsType, Field, InputType, ObjectType } from '@nestjs/graphql';
 import { Model } from './model';
 import { Post } from './post';
 
-@ObjectType('model')
+@ObjectType('User', { isAbstract: true })
+@InputType({ isAbstract: true })
+@ArgsType()
 export class User extends Model {
   @Field((_) => String)
   email: string;
