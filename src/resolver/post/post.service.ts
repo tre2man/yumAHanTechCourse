@@ -37,6 +37,9 @@ export class PostService {
       where: {
         deletedAt: null,
       },
+      include: {
+        user: true,
+      },
       orderBy: {
         createdAt: 'desc',
       },
